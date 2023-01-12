@@ -4,8 +4,6 @@ from PIL import Image
 # Create your models here.
 
 class Profil(models.Model):    
-    class Meta:
-        verbose_name_plural = "Profillər"
     user = models.OneToOneField(User,on_delete=models.CASCADE,related_name="profil")
     bio = models.CharField(max_length=300,blank=True,null=True)
     sehir = models.CharField(max_length=120,blank=True,null=True)
@@ -14,6 +12,8 @@ class Profil(models.Model):
     def __str__(self) -> str:
         return f"{self.user.username}"
 
+    class Meta:
+        verbose_name_plural = "Profillər"
 
     def save(self,*args,**kvargs):
         super().save(*args,**kvargs)
