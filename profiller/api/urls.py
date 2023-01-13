@@ -7,7 +7,7 @@ from rest_framework.routers import DefaultRouter
 
 router = DefaultRouter()
 router.register(r'kullanici-profilleri',ProfilViewSet)
-router.register(r'durum',ProfilDurumViewSet)
+router.register(r'durum',ProfilDurumViewSet,basename="durum")
 
 urlpatterns = [
     # path('kullanici-profilleri/',api_views.ProfilList.as_view(),name="profiller"),

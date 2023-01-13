@@ -7,6 +7,7 @@ from rest_framework.viewsets import ModelViewSet
 from rest_framework.viewsets import GenericViewSet
 from rest_framework import mixins
 from profiller.api.permissions import OzProfiliYadaReadOnlyBrat, OzDurumuYadaReadOnlyBrat
+from rest_framework.filters import SearchFilter
 # class ProfilList(generics.ListAPIView):
 #     queryset = Profil.objects.all()
 #     serializer_class  = ProfilSerializer
@@ -31,14 +32,25 @@ class ProfilViewSet(
     serializer_class  = ProfilSerializer
     # permission_classes = [IsAuthenticated]
     permission_classes = [OzProfiliYadaReadOnlyBrat]
+    filter_backends = [SearchFilter]
+    search_fields = ['sehir','bio']
 
 
 class ProfilDurumViewSet(ModelViewSet):
-    queryset = ProfilDurum.objects.all()
+    # queryset = ProfilDurum.objects.all()
     serializer_class  = ProfilDurumSerializer
     # permission_classes = [IsAuthenticated]
     # permission_classes = [OzProfiliYadaReadOnlyBrat]
     permission_classes = [OzDurumuYadaReadOnlyBrat]
+
+    # filter
+    def get_queryset(self):
+        queryset = ProfilDurum.objects.all()
+        username = self.request.query_params.get('username',None)
+        if username is not None:
+            queryset = queryset.filter(user_profile__user__username=username)
+        return queryset
+
 
     def perform_create(self, serializer):
         serializer.save(user_profile=self.request.user.profil)
