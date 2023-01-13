@@ -25,12 +25,13 @@ class Profil(models.Model):
                 img.save(self.foto.path)
 
 class ProfilDurum(models.Model):
-    class Meta:
-        verbose_name_plural = "Profil Mesajları"
     user_profile = models.ForeignKey(Profil,on_delete=models.CASCADE,related_name="durum")
     durum_mesaji = models.CharField(max_length=240)
     yaratilma_zamani = models.DateTimeField(auto_now_add=True)
     guncellenme_zamani = models.DateTimeField(auto_now=True)
+    
+    class Meta:
+        verbose_name_plural = "Profil Mesajları"
 
     def __str__(self) -> str:
         return f"{self.user_profile}"
