@@ -131,3 +131,4 @@ dmypy.json
 
 drf-venv/
 uploads/
+clients/
